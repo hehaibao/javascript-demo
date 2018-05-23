@@ -13,3 +13,4 @@
 7. [去除空格](https://hehaibao.github.io/javascript-demo/remove-space/)
 8. [Todolist](https://hehaibao.github.io/javascript-demo/todolist/)
 9. [拖动验证](https://hehaibao.github.io/javascript-demo/drag-verification/)
+10.[canvas时钟](https://hehaibao.github.io/javascript-demo/canvas-clock/)
