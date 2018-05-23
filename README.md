@@ -10,3 +10,4 @@
 4. [文字滚动](https://hehaibao.github.io/javascript-demo/txt-scroll/)
 5. [canvas下载图片](https://hehaibao.github.io/javascript-demo/download-canvas-img/)
 6. [canvas签名及预览](https://hehaibao.github.io/javascript-demo/sign/)
+7. [去除空格](https://hehaibao.github.io/javascript-demo/remove-space/)
