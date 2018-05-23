@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>去除空格 demo</title>
+<style>
+	div,input,button{margin: 0;padding: 0;}
+	.tc{text-align: center;margin: 50px auto;}
+	input{width: 220px;font-size: 16px;padding: 6px;}
+	button{width: 60px;height: 32px;line-height: 32px;background-color: green;color: #fff;font-size: 14px;cursor: pointer;}
+</style>
+</head>
+<body>
+		
+	<!--html-->
+	<div class="tc">
+		<input id="demo" type="text" value="[         这里是演示用的      ]"/>
+    	<button id="btn">去空格</button>
+	</div>
+
+	<!--js-->
+	<script>
+		(function(){
+			var $input = document.getElementById('demo'),
+				$btn = document.getElementById('btn');
+
+			$btn.onclick = function() {
+				$input.value = $input.value.replace(/(\s|\u00A0)+|(\s|\u00A0)+/g,'');
+			}
+		}());
+	</script>
+</body>
+</html>
