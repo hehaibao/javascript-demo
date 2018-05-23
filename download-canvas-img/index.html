@@ -6,22 +6,23 @@
     <style>
         html,body{margin: 0;padding: 0;}
         .tc{text-align: center;}
-
         #demo{width: 300px;margin: 20px auto;background-color: #f2f2f2;}
     </style>
 </head>
 <body>
 
+<!-- html -->
 <div id="demo">
     <canvas id="test" width="300" height="200"></canvas>
 </div>
 
 <div class="tc">
-    <a href="javascript:;" id="clickMe">点击我</a>
+    <a href="javascript:;" id="clickMe">点我下载</a>
 </div>
 
 <!--js-->
 <script>
+    var $clickMe = document.getElementById('clickMe');
 
     function draw() {
         var ctx = document.getElementById('test').getContext('2d');
@@ -66,7 +67,7 @@
         savaFile(imgdata,filename);
     }
 
-    document.getElementById('clickMe').onclick = function(){
+    $clickMe.onclick = function(){
         Download('#test');
     };
 </script>
