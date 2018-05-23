@@ -1,0 +1,133 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js todolist demo</title>  
+<style> 
+	*{margin: 0;padding: 0;}
+	#wrapper{ width:600px;margin:50px auto;text-align:left;}
+	.mbt30{ margin-bottom:30px;}
+	.tr{text-align: right;}
+
+	.table{border-collapse:collapse; border:1px solid #ccc;}
+	.table th, .table td{ border:1px solid #ccc;}
+	.table th{background-color: #999;color: #fff;font-size: 14px;}
+	.table tr:nth-child(even) td, .table tr:hover td{background-color: #f2f2f2;}
+	.del:hover{color: #000;}
+	
+</style>
+</head>  
+<body>  
+	<!-- html -->
+	<div id="wrapper">
+		<div class="mbt30 tr">
+			<input type="text" name="" placeholder="请输入文字" id="ipt"/>
+			<input id="add" type="button" value="添加"/>
+		</div>
+
+		<table class="table" width="100%">
+			<tr>
+				<th>测试标题1</th>
+				<th>测试标题2</th>
+				<th>测试标题3</th>
+			</tr>
+			<tr>
+				<td>内容1</td>
+				<td>内容2</td>
+				<td><a class="del" href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>内容11</td>
+				<td>内容22</td>
+				<td><a class="del" href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>内容111</td>
+				<td>内容222</td>
+				<td><a class="del" href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>内容1111</td>
+				<td>内容2222</td>
+				<td><a class="del" href="javascript:;">删除</a></td>
+			</tr>
+			<tr>
+				<td>内容11111</td>
+				<td>内容22222</td>
+				<td><a class="del" href="javascript:;">删除</a></td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- js -->
+	<script>
+		(function(){
+			var $wrapper = id('wrapper'),
+				$table = $wrapper.getElementsByTagName('table')[0],
+				$tr = $table.getElementsByTagName('tr'),
+				$tb = $table.tBodies[0],
+				$ipt = id('ipt'),
+				$add = id('add'),
+				$del = getByClass($wrapper, 'del');
+	
+				
+			//根据ID获取元素
+			function id(name) {
+				return document.getElementById(name);
+			}
+
+			//获取ClassName
+			function getByClass(obj, cls){
+				if(obj.getElementsByClassName){
+					return obj.getElementsByClassName(cls);
+				} else {
+					var all = document.all, 
+						reg = new RegExp('(^|\\s)' + cls + '(\\s|$)'),
+						res = [];
+
+					for(var i = 0; i < all.length; i++){
+						if(reg.test(all[i].className)){
+							res.push(all[i]);
+						}
+					}
+					return res;
+				}
+			}
+
+			//点击 添加
+			$add.onclick = function(){
+				var v = $ipt.value,
+					tr = $table.insertRow(),
+					td = tr.insertCell();
+				if(v == ''){
+					alert('请输入文字');
+					return;
+				}
+
+				td.innerHTML = v;
+				tr.appendChild(td);
+				td = tr.insertCell();
+				td.innerHTML = '我的后添加的内容';
+				tr.appendChild(td);
+				td = tr.insertCell();
+				td.innerHTML = '<a class="del" href="javascript:;">删除</a>';
+				tr.appendChild(td);
+				$tb.appendChild(tr);
+				$ipt.value = '';
+				$ipt.focus();
+			}
+	
+			//监听删除按钮 点击事件
+			document.addEventListener('click', function(event){
+				var target = event.target;
+				if(event.target.className.indexOf('del') != -1){
+					$tb.removeChild(target.parentNode.parentNode);
+				}
+			}, false);
+	
+		}());
+	</script>
+</body>
+</html> 
