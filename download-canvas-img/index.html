@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js 将canvas保存为图片到本地</title>
+    <style>
+        html,body{margin: 0;padding: 0;}
+        .tc{text-align: center;}
+
+        #demo{width: 300px;margin: 20px auto;background-color: #f2f2f2;}
+    </style>
+</head>
+<body>
+
+<div id="demo">
+    <canvas id="test" width="300" height="200"></canvas>
+</div>
+
+<div class="tc">
+    <a href="javascript:;" id="clickMe">点击我</a>
+</div>
+
+<!--js-->
+<script>
+
+    function draw() {
+        var ctx = document.getElementById('test').getContext('2d');
+        var img = new Image();
+        img.onload = function(){
+            ctx.drawImage(img,0,0);
+            ctx.beginPath();
+            ctx.moveTo(30,96);
+            ctx.lineTo(70,66);
+            ctx.lineTo(103,76);
+            ctx.lineTo(170,15);
+            ctx.stroke();
+        };
+        img.src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw==';
+    }
+    draw();
+
+    function Download(el, picType){
+        //------------------------------------------------------------------------
+        //1.确定图片的类型  获取到的图片格式 data:image/Png;base64,......
+        var type = picType || 'png'; //你想要什么图片格式 就选什么吧, 默认png
+        var d = document.querySelector(el);
+        var imgdata = d.toDataURL(type);
+        //2.0 将mime-type改为image/octet-stream,强制让浏览器下载
+        var fixtype = function(type){
+            type = type.toLocaleLowerCase().replace(/jpg/i,'jpeg');
+            var r = type.match(/png|jpeg|bmp|gif/)[0];
+            return 'image/'+r;
+        };
+        imgdata = imgdata.replace(fixtype(type),'image/octet-stream');
+        //3.0 将图片保存到本地
+        var savaFile = function(data,filename) {
+            var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+            save_link.href = data;
+            save_link.download = filename;
+            var event = document.createEvent('MouseEvents');
+            event.initMouseEvent('click',true,false,window,0,0,0,0,0,false,false,false,false,0,null);
+            save_link.dispatchEvent(event);
+        };
+        var filename = ''+new Date().getDate()+'.'+type;
+        //直接用当前几号做的图片名字
+        savaFile(imgdata,filename);
+    }
+
+    document.getElementById('clickMe').onclick = function(){
+        Download('#test');
+    };
+</script>
+</body>
+</html>

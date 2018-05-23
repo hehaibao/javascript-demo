@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>在线签名并生成图片｜何海宝的博客</title>
+<style>
+	html,body{margin:0;padding:0;background:#f2f2f2;}
+	input{border:0 none;}
+	input:focus{outline:none;}
+	h1{letter-spacing:3px;text-shadow:0 0 2px #999;}
+	.tc{text-align:center;}
+	.fl{float:left;}
+	.w50{width:50%;}
+	.oh{overflow:hidden;}
+	.mbt20{margin-bottom:20px;}
+	#sign{background-color:#ddd;}
+	.sign_pic{margin-left:50%;height:200px;line-height:200px;background-color:#ffffff;}
+	.btn {width:140px;height:40px;line-height:40px;color:#fff;font-size: 16px;letter-spacing:4px;border-radius: 5px;text-align: center;cursor: pointer;}
+	.b1 {background-color:#5cb85c;margin-right:10px;}
+	.b2 {background-color:#31b0d5;}
+</style>
+</head>
+<body>
+	
+<!--html-->
+<div id="wrap" class="tc">
+	<div class="oh mbt20">
+		<div class="w50 fl"><canvas id="sign"></canvas><p>签名区</p></div>
+		<div class="sign_pic"><img id='sign_pic' src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt='' /></div><p>预览区</p>	
+	</div>
+	<div>
+		<input class="btn b1" type="button" onClick="clean();" value="清空签名" />
+		<input class="btn b2" type="button" onClick="save();" value="生成图片" />
+	</div>
+</div>
+
+<!--js-->
+<script>
+	var canvas = document.getElementById('sign');
+	var img = document.getElementById('sign_pic');
+	var ctx = canvas.getContext('2d');
+	var mousePress = false;
+	var last = null;
+	var w = document.body.clientWidth;
+
+	canvas.width = w/2;
+	canvas.height = 200;
+
+	function beginDraw(){
+		mousePress = true;
+	}
+
+	function drawing(event){
+		event.preventDefault();
+		if(!mousePress) return;
+		var xy = pos(event);
+		if(last != null){
+			ctx.beginPath();
+			ctx.moveTo(last.x,last.y);
+			ctx.lineTo(xy.x,xy.y);
+			ctx.stroke();
+		}
+		last = xy;
+	}
+
+	function endDraw(event){
+		mousePress = false;
+		event.preventDefault();
+		last = null;
+	}
+
+	function pos(event){
+		var x,y;
+		if(isTouch(event)){
+		x = event.touches[0].pageX;
+		y = event.touches[0].pageY;
+		}else{
+		x = event.offsetX + event.target.offsetLeft;
+		y = event.offsetY + event.target.offsetTop;
+		}
+		return {x:x, y:y};
+	}
+
+	function isTouch(event){
+		var type = event.type;
+		return type.indexOf('touch') >= 0 ? true : false;
+	}
+
+	function save(){
+		var dataUrl = canvas.toDataURL();
+		img.src = dataUrl;
+	}
+
+	function clean(){
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		img.src = 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==';
+	}
+
+	ctx.lineWidth = 2;
+	ctx.strokeStyle="#0000ff";
+
+	canvas.onmousedown = beginDraw;
+	canvas.onmousemove = drawing;
+	canvas.onmouseup = endDraw;
+	canvas.addEventListener('touchstart',beginDraw,false);
+	canvas.addEventListener('touchmove',drawing,false);
+	canvas.addEventListener('touchend',endDraw,false);
+</script>
+</body>
+</html>

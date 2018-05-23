@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>原生JS之轮播图练习</title>
+	<style>
+		body,ul,ol{margin:0;padding:0;}
+		li{list-style:none;}
+		a{color:#333;text-decoration:none;}
+		h2{text-align:center;font-size:1.4em;}
+		#box{position:relative;width:480px;height:360px;margin:2% auto auto;overflow:hidden;}
+		#slider li{width:100%;height:100%;position:absolute;top:0;left:0;z-index:1;}
+		#slider li.active{z-index:2;}
+		#tabs{position:absolute;bottom:10px;right:10px;z-index:99;}
+		#tabs li{width:20px;height:20px;line-height:20px;font-size:.85em;margin-left:5px;float:left;text-align:center;background-color:rgba(0,0,0,0.5);color:#fff;cursor:pointer;}
+		#tabs li.active{background-color:#05ABE0;}
+		.btn{width:30px;height:70px;line-height:70px;text-align:center;background-color:rgba(0,0,0,0.5);font-size:1.2em;color:#fff;-webkit-transition:.3s all;transition:.3s all;position:absolute;top:50%;margin-top:-35px;z-index:99;}
+		#prev{left:0;}
+		#next{right:0;}
+		.btn:hover{background-color:#05ABE0;}
+	</style>
+	<script>
+		window.onload = function(){
+			
+			var sliders = function(picArr,effect){
+				var box = document.getElementById('box'), 
+					slider = document.getElementById('slider'),
+					tabs = document.getElementById('tabs'),
+					btns = document.getElementById('btns'),
+					styleArr = [],
+					play = timer = null,
+					picList = tabList = className = '',
+					w = 480,
+					_index = 0,
+					i = curIndex = 0;
+				
+				//生成图片数组
+				for(i=0; i<picArr.length; i++){
+					picList += '<li><img width="100%" src="'+picArr[i]+'"/></li>';
+					tabList += '<li>'+(i+1)+'</li>';
+				}
+				slider.innerHTML = picList;
+				tabs.innerHTML = tabList;
+				btns.innerHTML = '<a href="javascript:;" id="prev" class="btn"><</a> <a href="javascript:;" id="next" class="btn">></a>';
+				
+				var sliderLi = slider.getElementsByTagName('li'), 
+					len = sliderLi.length,
+					tabsLi = tabs.getElementsByTagName('li'),
+					tabsLen = tabsLi.length,
+					prev = document.getElementById('prev'),
+					next = document.getElementById('next');
+				
+				sliderLi[0].className = tabsLi[0].className = 'active';
+				len <= 1 && (btns.innerHTML = ''); //小于等于1张图的时候，去掉左右按钮
+				len >= 2 && _autoplay(); //大于等于2张图的时候，才能自动播放
+				
+				//底部切换按钮
+				for (i = 0; i < tabsLen; i++) {
+					tabsLi[i].index = i;
+					tabsLi[i].onclick = function(){
+						_goto(this.index);
+						curIndex = this.index;
+					}
+				}
+
+				prev.onclick = function(){
+					_prev();
+				}
+				
+				next.onclick = function(){
+					_next();
+				}
+				
+				//鼠标划过关闭定时器
+				box.onmouseover = function(){
+					clearInterval(play);
+				}
+				
+				//鼠标离开启动自动播放
+				box.onmouseout = function(){
+					_autoplay();
+				}
+				
+				//上一页
+				function _prev(){
+					_index = _getIndex('prev');
+					_run(_index);
+				}
+				
+				//下一页
+				function _next(){
+					_index = _getIndex('next');
+					_run(_index);
+				}
+				
+				//切换到指定某页
+				function _goto(_index){
+					_run(_index);
+				}
+				
+				//自动播放 @param t: 间隔播放时间，以毫秒为单位 默认2000ms
+				function _autoplay(t){
+					t == undefined && (t = 2000);
+					play = setInterval(function(){
+						_next();
+					},t);
+				}
+				
+				//计算当前索引值 @param type: 按钮名称，参数有prev和next，分别表示前一页和后一页按钮
+				function _getIndex(type){
+					switch(type){
+						case 'prev':
+							curIndex--;
+							if(curIndex<0) curIndex = len-1;
+						break;
+						case 'next':
+							curIndex++;
+							if(curIndex>=len) curIndex = 0;
+						break;
+					}
+					return curIndex;
+				}
+				
+				//轮播切换 @param curIndex: 当前索引值
+				function _run(curIndex){
+					for(i=0; i<len; i++){
+						sliderLi[i].style.opacity = 0;
+						sliderLi[i].style.filter = "alpha(opacity=0)";	
+						sliderLi[i].className = tabsLi[i].className = '';
+					}
+					sliderLi[curIndex].className = tabsLi[curIndex].className = 'active';
+					_show(curIndex,effect);
+				}
+				
+				//切换效果 @param curIndex: 当前索引值；effect: 切换效果名称（fade为淡入淡出效果）
+				function _show(curIndex,effect){
+					switch(effect){
+						case 'fade':
+							var alpha = 0;
+							clearInterval(timer);
+							timer = setInterval(function(){
+								alpha += 2;
+								alpha > 100 && (alpha = 100);
+								sliderLi[curIndex].style.opacity = alpha / 100;
+								sliderLi[curIndex].style.filter = "alpha(opacity = " + alpha + ")";
+								alpha == 100 && clearInterval(timer); //解决不断闪烁
+							},20);
+						break;
+					}
+				}
+				
+			}
+			
+			//方法调用(参数1: 图片数组；参数2: 切换效果)
+			sliders(['images/1.jpg','images/2.jpg','images/3.jpg','images/4.jpg','images/5.jpg'],'fade');
+		}
+	</script>
+</head>
+<body>
+	<h2>原生JS之轮播图练习</h2>
+	
+	<!--主体-->
+	<div id="box">
+		<ul id="slider"></ul>
+		<div id="btns"></div>
+		<ol id="tabs"></ol>
+	</div>
+	
+</body>
+</html>

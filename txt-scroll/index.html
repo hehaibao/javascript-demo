@@ -1,0 +1,98 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 文字滚动</title>  
+<style type="text/css"> 
+	html{width:100%;height:100%;margin:0;padding:0;}  
+	body{max-width:640px;height:100%;-webkit-touch-callout: none;-webkit-text-size-adjust: none;margin:0 auto;padding:0;overflow:hidden;position:relative;background-color:#333;}  
+	#content{position:relative;width:100%;height:100%;margin:0 auto;top:0;left:0;overflow:hidden;}
+	#r{width:100%;height:0;}
+	#textsuper{position:absolute;top:-1000px;left:-1000px;overflow-x:hidden;overflow-y:hidden;z-index:4000}
+	#textsub{color:#000;position:relative;font-size:20pt;text-align:center;line-height:26pt}
+</style>  
+<script>
+	var gSizeMode = 'bodyWidth',
+		gAnimateMode = 'up',
+		gColor = '#ffff33',
+		gFontSize = '14pt',
+		gTextAreaLeft = 0.1,
+		gTextAreaTop = 0.1,
+		gTextAreaWidth = 0.9,
+		gTextAreaHeight = 0.3,
+		gSpeed = 400,		
+		gCardText ='' || '好消息。好消息！<br>本人出租：<br>陪吃饭10块，<br>陪聊20块，<br>陪喝酒30块，<br>陪哭100块，<br>陪逛街50块，<br>陪晒太阳10块（阴天半价），<br>陪压马路20块，（1公里以内）。 <br>注：合法经营，<br>诚信为本，<br>免费送拥抱，<br>30度以上看心情再议价，<br>小本经营概无发票！<br>提前预约哦！<br>小本生意，概不赊账!';
+		
+	var gTextSub        = 0;
+	var gTextSuper      = 0;
+	var gTextContent    = 0;
+	var pop_up_note_mode = true;
+	
+	function onLoad() {
+	    gTextSub     = id("textsub");
+	    gTextSuper   = id("textsuper");
+	    gTextContent = id("textcontent");
+	    
+	    if(gSizeMode == 'bodyWidth') {
+	        var ruler   = document.getElementById("r");
+	        var baseLen = ruler.offsetWidth;
+	        gTextSuper.style.left   = baseLen * gTextAreaLeft;
+	        gTextSuper.style.top    = baseLen * gTextAreaTop;
+	        gTextSuper.style.height = baseLen * gTextAreaHeight;
+	        gTextSuper.style.width  = baseLen * gTextAreaWidth;
+	    }
+	    
+	    if(gAnimateMode == 'up') {
+	        onUpLoad();
+	        setTimeout("onUpAnimate()", 10);
+	    }
+	    
+	    gTextContent.innerHTML = gCardText;
+	    
+	    // font size
+	    if(typeof(gFontSize) != 'undefined') {
+	        gTextContent.style.fontSize = gFontSize;
+	    }
+		
+		// font color
+	    if(typeof(gColor) != 'undefined') {
+	        gTextContent.style.color = gColor;
+	    }
+	}
+	
+	function id(name) {
+		return document.getElementById(name);
+	}
+
+	function onUpLoad() {
+		gCardText = gCardText;
+	    gTextSub.style.top = gTextSuper.offsetHeight;
+	}
+	
+	function onUpAnimate() {
+	    textsub.style.top = textsub.offsetTop - 1;
+	    if(textsub.offsetTop < - textsub.offsetHeight) {
+	        textsub.style.top = textsuper.offsetHeight;
+	    }
+	    setTimeout("onUpAnimate()", 20);
+	}
+	
+	window.onload = function(){ 
+		onLoad();
+	}
+</script>
+</head>  
+<body>  
+ 	<div id="content">  
+ 		<div id="r"></div>
+		<div id="textsuper">
+			<div id="textsub">
+				<b id="textcontent"></b>
+			</div>
+		</div>	
+	</div>  
+</div>
+</body>
+</html> 
