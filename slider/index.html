@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>原生JS之轮播图练习</title>
+	<title>轮播图练习</title>
 	<style>
 		body,ul,ol{margin:0;padding:0;}
 		li{list-style:none;}
@@ -19,6 +19,18 @@
 		#next{right:0;}
 		.btn:hover{background-color:#05ABE0;}
 	</style>
+</head>
+<body>
+	<h2>原生JS之轮播图练习</h2>
+	
+	<!--主体-->
+	<div id="box">
+		<ul id="slider"></ul>
+		<div id="btns"></div>
+		<ol id="tabs"></ol>
+	</div>
+	
+	<!-- js -->
 	<script>
 		window.onload = function(){
 			
@@ -155,16 +167,5 @@
 			sliders(['images/1.jpg','images/2.jpg','images/3.jpg','images/4.jpg','images/5.jpg'],'fade');
 		}
 	</script>
-</head>
-<body>
-	<h2>原生JS之轮播图练习</h2>
-	
-	<!--主体-->
-	<div id="box">
-		<ul id="slider"></ul>
-		<div id="btns"></div>
-		<ol id="tabs"></ol>
-	</div>
-	
 </body>
 </html>
