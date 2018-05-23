@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<title>在线签名并生成图片｜何海宝的博客</title>
+<title>在线签名并生成图片demo</title>
 <style>
 	html,body{margin:0;padding:0;background:#f2f2f2;}
 	input{border:0 none;}
@@ -37,12 +37,12 @@
 
 <!--js-->
 <script>
-	var canvas = document.getElementById('sign');
-	var img = document.getElementById('sign_pic');
-	var ctx = canvas.getContext('2d');
-	var mousePress = false;
-	var last = null;
-	var w = document.body.clientWidth;
+	var canvas = document.getElementById('sign'),
+		img = document.getElementById('sign_pic'),
+		ctx = canvas.getContext('2d'),
+		mousePress = false,
+		last = null,
+		w = document.body.clientWidth;
 
 	canvas.width = w/2;
 	canvas.height = 200;
