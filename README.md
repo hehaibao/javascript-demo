@@ -12,3 +12,4 @@
 6. [canvas签名及预览](https://hehaibao.github.io/javascript-demo/sign/)
 7. [去除空格](https://hehaibao.github.io/javascript-demo/remove-space/)
 8. [Todolist](https://hehaibao.github.io/javascript-demo/todolist/)
+9. [拖动验证](https://hehaibao.github.io/javascript-demo/drag-verification/)
