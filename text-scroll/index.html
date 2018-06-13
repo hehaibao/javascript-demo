@@ -1,0 +1,102 @@
+<html>  
+<head>  
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>js 鼠标悬浮滚动，离开暂停</title>  
+	<style> 
+		body{margin: 0;padding: 0;font-size: 14px;}
+		a{text-decoration: none;}
+		#demo{width: 250px;margin: 30px auto;height: 40px;overflow: hidden;background-color: #999;}
+		#demo a{width: 100%;height: 40px;line-height: 40px;display: inline-block;font-size: 14px;color: #fff;text-align: center;word-break: break-all;white-space: nowrap;}
+	</style>
+</head>  
+<body>  
+	<!-- html -->
+	<div id="demo">
+		<a href="javascript:;" id="txt">少壮不努力老大徒伤悲一失足成千古恨少壮不努力老大徒伤悲一失足成千古恨</a>
+	</div>
+
+	<!-- js -->
+	<script>
+	var $demo = document.getElementById('demo'),
+		$txt = document.getElementById('txt');
+
+	window.onload = function() {
+		txtScroll();
+	}
+	
+	function txtScroll() {
+        var num = 0,
+			timer = null,
+			demoW = $demo.offsetWidth,
+			txt = $txt.textContent,
+			textLen = txt && txt.length,
+			txtWidth = calcStringPixelsCount(txt, 14);
+
+		// 小于8个字符的时候，不滚动
+        if (textLen <= 8) {
+            return;
+        }
+
+		// 鼠标 进入
+		$txt.onmouseenter = function() {
+			clearInterval(timer);
+			timer = setInterval(function() {
+				if (num == -txtWidth) {
+					num = demoW; //滚动到最后一个字的时候，重置为demo的宽度，即：从右侧继续向左滚
+				}
+				num -= 1;
+				setTransform(num);
+			}, 50);
+		}
+
+		// 鼠标 离开
+		$txt.onmouseleave = function() {
+			clearInterval(timer);
+			num = 0;
+			setTransform(num);
+		}
+	}
+
+	function calcStringPixelsCount(str, strFontSize) {
+		// 字符串字符个数
+		var stringCharsCount = str.length;
+
+		// 字符串像素个数
+		var stringPixelsCount = 0;
+
+		// JS 创建HTML元素：span
+		var elementPixelsLengthRuler = document.createElement("span");
+		elementPixelsLengthRuler.style.fontSize = strFontSize;  // 设置span的fontsize
+		elementPixelsLengthRuler.style.visibility = "hidden";  // 设置span不可见
+		elementPixelsLengthRuler.style.display = "inline-block";
+		elementPixelsLengthRuler.style.wordBreak = "break-all !important";  // 打断单词
+
+		// 添加span
+		$demo.appendChild(elementPixelsLengthRuler);
+
+		for (var i =0; i < stringCharsCount; i++) {
+			// 判断字符是否为空格，如果是用&nbsp;替代，原因如下：
+			// 1）span计算单个空格字符（ ），其像素长度为0
+			// 2）空格字符在字符串的开头或者结果，计算时会忽略字符串
+			if (str[i] == " ") {
+				elementPixelsLengthRuler.innerHTML = "&nbsp;";
+			} else {
+				elementPixelsLengthRuler.innerHTML = str[i];
+			}
+			stringPixelsCount += elementPixelsLengthRuler.offsetWidth;
+		}
+
+		return stringPixelsCount;
+	}
+
+	function setTransform(num) {
+		// css3 的滚动（此处未做浏览器兼容）
+		$txt.style.cssText = 'transform: translateX(' + num + 'px)';
+	}
+
+	</script>
+</body>
+</html> 
