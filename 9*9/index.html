@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>99乘法表 demo</title>
+    <style>
+        html, body{margin: 0;padding: 0;}
+        #box{width: 90%;margin: 20px auto;text-align: center;}
+        #box span{width: 95px;display: inline-block;}
+    </style>
+</head>
+<body>
+    <!-- html -->
+    <div id="box"></div>
+
+    <!-- js -->
+    <script>
+        window.onload = function() {
+            var $box = document.getElementById('box');
+            var tpl = '';
+
+            for(var i = 1; i <= 9; i++) {
+                tpl += '</br>';
+                for(var j = 1; j <= 9; j++) {
+                    tpl += '<span>'+ i + ' * ' + j + ' = ' + i * j + '</span>';
+                    if(j == 9) {
+                        tpl += '</br>';
+                    }
+                }
+            }
+
+            $box.innerHTML = tpl;
+        }
+    </script>
+</body>
+</html>
