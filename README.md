@@ -27,3 +27,5 @@
 11. [鼠标移入移出 文字滚动](https://hehaibao.github.io/javascript-demo/text-scroll/)
 
 12. [全选反选](https://hehaibao.github.io/javascript-demo/check-all/)
+
+13. [99乘法表](https://hehaibao.github.io/javascript-demo/9*9/)
