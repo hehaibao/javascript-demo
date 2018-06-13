@@ -1,0 +1,75 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 全选/反选</title>  
+<style> 
+	body,ul,li,p{margin:0;padding:0;}
+	body{font-family:"Arial";font-size:14px;}
+	ul{list-style:none;}
+	label,input,a{vertical-align:middle;}
+	a{color:#666;text-decoration:none;}
+	a:hover{color:#333;}
+	label{cursor: pointer;}
+	ul{width:300px;margin:30px auto;padding:10px;border:1px solid #ccc;}
+	h2{padding-bottom:10px;border-bottom:1px solid #ccc;font-size: 15px;}
+	p{margin-top:10px;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+	<ul>
+		<h2>
+			<label><input type="checkbox" id="checkAll" /> 全选</label>
+			<a href="javascript:;">反选</a>
+		</h2>
+		<li><p><label><input type="checkbox" name="item" /> A</label></p></li>    
+		<li><p><label><input type="checkbox" name="item" /> B</label></p></li>
+		<li><p><label><input type="checkbox" name="item" /> C</label></p></li>
+		<li><p><label><input type="checkbox" name="item" /> D</label></p></li>
+	</ul>
+		
+	<!-- js -->
+	<script>
+		window.onload = function() {
+			var oA = document.getElementsByTagName("a")[0],
+				oInput = document.getElementsByTagName("input"),
+				oInputLen = oInput && oInput.length;
+
+			//根据选中数量，判断是否全选
+			var checkAll = function() {
+				for(var i = 1, n = 0; i < oInputLen; i++) {
+					oInput[i].checked && n++;
+				}
+				oInput[0].checked = n == oInputLen - 1;
+			};
+
+			//全选/全不选
+			oInput[0].onclick = function() {
+				for(var i = 1; i < oInputLen; i++) {
+					oInput[i].checked = this.checked;
+				}
+				checkAll();
+			};
+
+			//反选
+			oA.onclick = function() {
+				for(var i = 1; i < oInputLen; i++) {
+					oInput[i].checked = !oInput[i].checked;
+				}
+				checkAll();
+			};
+
+			//单个复选
+			for(var i = 1; i < oInputLen; i++) {
+				oInput[i].onclick = function() {
+					checkAll();
+				}	
+			}	
+		}
+	</script>
+		
+</body>
+</html> 
