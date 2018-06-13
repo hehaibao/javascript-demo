@@ -1,6 +1,6 @@
 ### Javascript Demo
 
-此项目存放一些平时的javascript练习demo，将不定期更新~
+此项目存放一些平时的javascript练习demo，今后将不定期更新~
 
 **Demos:**
 
@@ -25,3 +25,5 @@
 10. [canvas时钟](https://hehaibao.github.io/javascript-demo/canvas-clock/)
 
 11. [鼠标移入移出 文字滚动](https://hehaibao.github.io/javascript-demo/text-scroll/)
+
+12. [全选反选](https://hehaibao.github.io/javascript-demo/check-all/)
