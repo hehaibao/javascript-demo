@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>返回顶部 demo</title>
+    <style>
+        html, body{margin: 0;padding: 0;}
+        a{text-decoration: none;}
+        .wrapper{height: 1500px;}
+        #back-top{width: 50px;height: 50px;line-height: 50px;display: none;background-color: #000;color: #fff;text-align: center;border-radius: 50%;font-size: 12px;position: fixed;bottom: 80px;right: 20px;}
+    </style>
+</head>
+<body>
+    <!-- html -->
+    <div class="wrapper">
+        test content
+    </div>
+    <a href="javascript:;" id="back-top">TOP</a>
+
+    <!-- js -->
+    <script>
+        window.onload = function() {
+            var $backTop = document.getElementById('back-top');
+
+            //点击top
+            $backTop.onclick = function() {
+                top();
+            }
+
+            //滚动监听
+            window.onscroll = function() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                $backTop.style.display = currentScroll > 150 ? 'block' : 'none';
+            }
+
+            //返回顶部
+            function top() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if (currentScroll > 0) {
+                    window.requestAnimationFrame(arguments.callee);
+                    window.scrollTo(0, currentScroll - (currentScroll/5));
+                }
+            }
+
+        }
+    </script>
+</body>
+</html>
