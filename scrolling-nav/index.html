@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跟随滚动的导航 demo</title>
+    <style>
+        html, body, h2{margin: 0;padding: 0;}
+        body{height: 2000px;}
+        h2{height: 60px;line-height: 60px;text-align: center;}
+        nav{width: 1000px;margin: 20px auto;background-color: #333;}
+        nav.fixed{position: fixed;top: 0;left: 50%;margin-left: -500px;}
+        nav a{margin: 0 10px;color: #fff;text-decoration: none;padding: 10px 0;display: inline-block;}
+    </style>
+</head>
+<body>
+    <!-- html -->
+    <h2>跟随滚动条的导航</h2>
+    <nav id="nav">
+        <a href="javascript:;">首页</a>
+        <a href="javascript:;">产品</a>
+        <a href="javascript:;">资讯</a>
+        <a href="javascript:;">关于我们</a>
+    </nav>
+
+    <!-- js -->
+    <script>
+        window.onload = function() {
+           var $nav = document.getElementById('nav');
+           window.onscroll = function() {
+                var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+                if(currentScroll > 30) {
+                    $nav.classList.add('fixed');
+                } else {
+                    $nav.classList.remove('fixed');
+                }
+           }
+        }
+    </script>
+</body>
+</html>
