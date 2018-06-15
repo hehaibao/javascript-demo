@@ -1,0 +1,81 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js toast提示</title>  
+<style> 
+	html,body{margin:0;padding:0;}
+	#content{width: 200px;margin: 20px auto;text-align: center;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+ 	<div id="content">  
+		 <h2>toast，支持多个</h2>
+		 <input type="text" value="" id="ipt" placeholder="点提交(可连续点击)" />
+		 <button id="submit-btn">提交</button>
+	</div>  
+
+	<!-- js -->
+	<script>
+		window.onload = function(){ 
+			var toastIndex = 0;
+			var $ipt = document.getElementById('ipt'),
+				$btn = document.getElementById('submit-btn');
+
+			$btn.onclick = function() {
+				if($ipt.value == '') {
+					toast('请输入点啥~');
+					return;
+				}
+				toast('提交成功!','success');
+			}
+
+			/*
+			* @params msg string 提示信息（必填）
+			* @parmas type string 类型（选填，默认黑色，success时绿色）
+			*/
+			function toast(msg, type) {
+				var clientH = window.innerHeight; //屏幕高度
+				var h = 0;
+				var color = type && type == 'success' ? '#5cb85c' : '#666'; //区分提示的颜色
+				var getCount = function() {
+					//获取toast数量
+					return document.getElementsByClassName('toast').length;
+				};
+
+				//创建dom
+				var createDom = function() {
+					toastIndex++;
+					h = toastIndex * 34; //34 => 是每个toast的高度+间距之和
+					if(h >= clientH) {
+						//越界处理
+						toastIndex = 0;
+					}
+					var div = document.createElement('div');
+					div.className = 'toast toast-'+toastIndex;
+					div.style.cssText = 'position: fixed;top: '+h+'px;right: 10px;z-index: 9;background-color: '+color+';color: #fff;text-align: center;padding: 2px 10px;font-size: 14px;';
+					div.innerHTML = msg || '出错咯';
+					document.body.appendChild(div);
+				};
+
+				createDom();
+				
+				var prevToast = document.getElementsByClassName('toast-'+toastIndex)[0];
+				
+				//延迟移除toast
+				setTimeout(function(){
+					document.body.removeChild(prevToast);
+					
+					//toast数量为0时，重置
+					if(getCount() == 0) {
+						toastIndex = 0;
+					}
+				}, 600);
+			}
+		}
+	</script>
+</body>
+</html> 
