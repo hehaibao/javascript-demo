@@ -1,0 +1,70 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 鼠标悬浮提示</title>  
+<style> 
+	html,body,ul,h2{margin: 0;padding: 0;}
+	h2{text-align: center;margin: 30px auto 20px;}
+	ul li{list-style: none;width: 300px;margin: 10px auto;position: relative;}
+	ul a{font-size: 18px;color: #333;text-decoration: none;padding-left: 0;-webkit-transition: all 0.4s;-moz-transition: all 0.4s;-ms-transition: all 0.4s;-o-transition: all 0.4s;transition: all 0.4s;}
+	ul a:hover{text-decoration: underline;padding-left: 18px;display: inline-block;}
+	.tip{display: none;position: absolute;left: 0;z-index: 1;background:rgba(0,0,0,.5);color:#fff;line-height: 25px;font-size: 12px;padding: 2px 5px;border-radius: 4px;}
+	.ellipsis{white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+ 	<div id="content">  
+		<h2>鼠标悬浮提示</h2>
+ 		<ul>
+			 <li class="ellipsis"><a href="javascript:;" data-title="会计挪用公款打赏930万，女主播们该退钱吗?">会计挪用公款打赏930万，女主播们该退钱吗?</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="监委作出通缉决定，20天追回“失踪”校长">监委作出通缉决定，20天追回“失踪”校长</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="6月15日周五[新闻速览一分钟]">6月15日周五[新闻速览一分钟]</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="女儿女婿一起毒杀母亲，看着她离去!台州这起杀人案陪审员几度落泪，让人无比唏嘘">女儿女婿一起毒杀母亲，看着她离去!台州这起杀人案陪审员几度落泪，让人无比唏嘘</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="世界杯今晚开幕!这份“伪球迷”生存指南请收好">世界杯今晚开幕!这份“伪球迷”生存指南请收好</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="世界杯看球(脸)指南：能不能愉快度过这个夏天就靠它了!">世界杯看球(脸)指南：能不能愉快度过这个夏天就靠它了!</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="[紫牛新闻]大四女生毕业捐给母校100万,母校"回赠"一张长椅">[紫牛新闻]大四女生毕业捐给母校100万,母校"回赠"一张长椅</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="富商猝死后留下4张欠条!妻子主动替夫还债，竟揭开惊人秘密……">富商猝死后留下4张欠条!妻子主动替夫还债，竟揭开惊人秘密……</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="陕西唯一现场采访媒体，华商报带您探秘2018世界杯">陕西唯一现场采访媒体，华商报带您探秘2018世界杯</a></li>
+			 <li class="ellipsis"><a href="javascript:;" data-title="静夜思|不要让舒适区，限制你的成长">静夜思|不要让舒适区，限制你的成长</a></li>
+		 </ul>
+	</div>
+
+	<!-- js -->
+	<script>
+		window.onload = function() { 
+			var $el = document.getElementById('content'),
+				$li = $el.getElementsByTagName('li'),
+				liLen = $li && $li.length;
+
+			var createTip = function() {
+				var div = document.createElement('div');
+				div.className = 'tip';
+				document.body.appendChild(div);
+				return div;
+			};
+			
+			var tip = createTip();
+
+			if(liLen) {
+				for(var i = 0; i < liLen; i++) {
+					$li[i].onmousemove = function(event) {
+						event = event || window.event;
+						var title = this.getElementsByTagName('a')[0].getAttribute('data-title');
+						tip.innerHTML = title;
+						tip.style.display = 'block';
+						tip.style.left = event.clientX + 'px';
+						tip.style.top = event.clientY + 15 + 'px';
+					}
+					$li[i].onmouseout = function() {
+						tip.style.display = 'none';
+					}
+				}
+			}
+		}
+	</script>
+</body>
+</html> 
