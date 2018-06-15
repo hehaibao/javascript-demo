@@ -33,3 +33,5 @@
 14. [返回顶部](https://hehaibao.github.io/javascript-demo/back-top/)
 
 15. [跟随滚动的导航](https://hehaibao.github.io/javascript-demo/scrolling-nav/)
+
+16. [鼠标悬浮提示](https://hehaibao.github.io/javascript-demo/tips/)
