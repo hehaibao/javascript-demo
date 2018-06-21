@@ -39,3 +39,5 @@
 17. [toast提示](https://hehaibao.github.io/javascript-demo/toast/)
 
 18. [两张卡牌切换](https://hehaibao.github.io/javascript-demo/card-switching/)
+
+19. [阅读或收起全文](https://hehaibao.github.io/javascript-demo/view-more/)
