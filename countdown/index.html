@@ -1,0 +1,54 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 倒计时</title>  
+<style> 
+	html,body{margin:0;padding:0;}
+	#content{width: 320px;margin: 40px auto;}
+	#code-ipt{width: 220px;height: 30px;line-height: 30px;text-indent: 10px;}
+	#send-code-btn{width: 80px;height: 30px;cursor: pointer;border: none;background-color: #f2f2f2;}
+	#send-code-btn.disabled{background-color: #ccc;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+ 	<div id="content">  
+		 <input type="text" value="" id="code-ipt" placeholder="这个不重要">
+		 <button id="send-code-btn">获取验证码</button>
+	</div>
+	
+	<!-- js -->
+	<script>
+		window.onload = function(){ 
+			var $btn = document.getElementById('send-code-btn');
+			var countdown = 60; //一共60秒
+
+			function countDown(_self) {
+				if (countdown == 0) {  
+					_self.classList.remove('disabled');  
+					_self.innerText = "获取验证码";  
+					countdown = 60;  
+					return false;  
+				} else {
+					_self.classList.add('disabled');  
+					_self.innerText = countdown + "s";  
+					countdown--;  
+				}
+				setTimeout(function() {  
+					countDown(_self);
+				},1000);  
+			}
+
+			$btn.onclick = function() {
+				if(!this.classList.contains('disabled')) { //防止重复点击
+					countDown(this);
+				}
+			}
+			
+		}
+	</script>
+</body>
+</html> 
