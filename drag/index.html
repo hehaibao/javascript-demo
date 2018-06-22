@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拖拽 demo</title>
+    <style>
+        html, body, h2, p{margin: 0;padding: 0;}
+        .xy-info{text-align: center;position: fixed;top: 10px;right: 10px;background: #f2f2f2;padding: 5px 10px;}
+        #modal{width: 300px;height: 150px;background-color: #f2f2f2;position: absolute;z-index: 222;}
+        #modal h2{font-size: 16px;padding: 5px 10px;border-bottom: 1px solid #ddd;}
+        #modal .content{padding: 10px;font-size: 14px;color: #666;}
+    </style>
+</head>
+<body>
+    <!-- html -->
+    <p class="xy-info">当前坐标：x: <span id="x">0px</span> -- y: <span id="y">0px</span></p>
+
+    <div id="modal">
+        <h2>拖拽我</h2>
+        <div class="content">
+            随便写点啥
+        </div>
+    </div>
+
+    <!-- js -->
+    <script>
+        window.onload = function() {
+            var $modal = document.getElementById('modal');
+            var $x = document.getElementById('x'),
+                $y = document.getElementById('y');
+            var isDrag = false;
+            var clientX = 0, clientY = 0, currentX = 0, currentY = 0, _left = 0, _top = 0, currentLeft = 0, currentTop = 0;
+
+            //鼠标按下事件
+            $modal.onmousedown = function(event){
+                event = event || window.event;
+                //获取坐标
+                clientX = event.clientX;
+                clientY = event.clientY;
+
+                //获取left,top
+                _left = $modal.offsetLeft;
+                _top = $modal.offsetTop;
+
+                //设置开关
+                isDrag = true;
+
+                //设置鼠标样式
+                $modal.style.cursor = 'move';
+            }
+
+            //鼠标移动
+            window.onmousemove = function(event){
+                event = event || window.event;
+                if(isDrag == false) {
+                    return;
+                }
+                //获取最新坐标
+                currentX = event.clientX;
+                currentY = event.clientY;
+
+                //计算移动后的左上偏移量
+                currentLeft = currentX - (clientX - _left);
+                currentTop = currentY - (clientY - _top);
+
+                //越界处理
+                if(currentLeft <= 0) {
+                    currentLeft = 0;
+                }
+                if(currentTop <= 0) {
+                    currentTop = 0;
+                }
+                if(currentLeft >= window.innerWidth - $modal.offsetWidth) {
+                    currentLeft = window.innerWidth - $modal.offsetWidth;
+                }
+                if(currentTop >= window.innerHeight - $modal.offsetHeight) {
+                    currentTop = window.innerHeight - $modal.offsetHeight;
+                }
+
+                //设置div的最新位置
+                $modal.style.left = currentLeft+'px';
+                $modal.style.top = currentTop+'px';
+
+                //更新坐标
+                $x.innerText = $modal.style.left;
+                $y.innerText = $modal.style.top;
+            }
+
+            //鼠标抬起事件
+            $modal.onmouseup = function(){
+                //重置开关和鼠标样式
+                isDrag = false;
+                $modal.style.cursor = 'default';
+            }
+        }
+    </script>
+</body>
+</html>
