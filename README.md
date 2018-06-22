@@ -43,3 +43,5 @@
 19. [阅读或收起全文](https://hehaibao.github.io/javascript-demo/view-more/)
 
 20. [发送验证码 倒计时](https://hehaibao.github.io/javascript-demo/countdown/)
+
+21. [拖拽](https://hehaibao.github.io/javascript-demo/drag/)
