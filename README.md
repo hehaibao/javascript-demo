@@ -1,8 +1,5 @@
 ### Javascript Demo
 
-此项目存放一些平时的javascript练习demo，今后将不定期更新~
-
-**Demos:**
 
 1.  [轮播图](https://hehaibao.github.io/javascript-demo/slider/) 
 
