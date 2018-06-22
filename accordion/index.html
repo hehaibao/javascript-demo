@@ -1,0 +1,79 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 手风琴 demo</title>  
+<style> 
+	html,body,ul,p{margin:0;padding:0;}
+	li{list-style: none;}
+	a{text-decoration: none;color: #333;}
+	#accordion{width: 640px;margin: 20px auto;}
+	#accordion li{margin-bottom: 5px;}
+	#accordion li a{display: block;padding: 5px 10px;background-color: #f2f2f2;border: 1px solid #ccc;border-top-left-radius: 4px;border-top-right-radius: 4px;}
+	#accordion li a:hover{text-decoration: underline;}
+	#accordion .content{padding: 10px;font-size: 14px;color: #999;border: 1px solid #ccc;border-top: 0;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;display: none;}
+	#accordion li.active .content{display: block;}
+	#accordion .content p{line-height: 24px;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+	<ul id="accordion">
+		<li class="active">
+			<a href="javascript:;">#1. 测试内容</a>
+			<div class="content">
+				<p>1的内容，随便写写</p>
+				<p>1的内容，随便写写</p>
+				<p>1的内容，随便写写</p>
+			</div>
+		</li>
+		<li>
+			<a href="javascript:;">#2. 测试内容</a>
+			<div class="content">
+				2的内容，随便写写
+			</div>
+		</li>
+		<li>
+			<a href="javascript:;">#3. 测试内容</a>
+			<div class="content">
+				3的内容，随便写写
+			</div>
+		</li>
+	</ul>
+
+	<!-- js -->
+	<script>
+		window.onload = function(){ 
+			var $accordion = document.getElementById('accordion'),
+				$Li = $accordion.getElementsByTagName('li'),
+				liLen = $Li && $Li.length;
+
+			if(!liLen) {
+				return;
+			}
+			for(var i = 0; i < liLen; i++) {
+				(function(n){
+			　　	   $Li[i].onclick = function(event) {
+						event = event || window.event;
+						var targetObj = event.target || event.srcElement;
+						if(targetObj.nodeName.toLowerCase() == 'a') {
+							if(!$Li[n].classList.contains('active')) {
+								//收起其他，展开自己
+								for(var j = 0; j < liLen; j++) {
+									$Li[j].classList.remove('active');
+								}
+								$Li[n].classList.add('active');
+							} else {
+								//收起自己
+								$Li[n].classList.remove('active');
+							}
+						}
+					}
+			　　})(i);
+			}
+		}
+	</script>
+</body>
+</html> 
