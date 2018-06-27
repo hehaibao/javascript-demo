@@ -44,3 +44,5 @@
 21. [拖拽](https://hehaibao.github.io/javascript-demo/drag/)
 
 22. [手风琴](https://hehaibao.github.io/javascript-demo/accordion/)
+
+23. [随机生成](https://hehaibao.github.io/javascript-demo/random/)
