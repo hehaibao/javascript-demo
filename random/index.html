@@ -1,0 +1,111 @@
+<html>  
+<head>  
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>js 随机 demo</title>  
+<style> 
+	html,body,p{margin:0;padding:0;}
+	a{text-decoration: none;color: #333;}
+	.tc{text-align: center;}
+	#add{width: 120px;height: 30px;line-height: 30px;background-color: #333;border-radius: 5px;color: #fff;text-align: center;display: inline-block;margin: 20px auto auto;}
+	#box{width: 640px;height: 300px;margin: 20px auto;background-color: #f2f2f2;position: relative;}
+	#el{position:absolute;top:0;left:0;-webkit-transition: all 0.4s;-moz-transition: all 0.4s;-ms-transition: all 0.4s;-o-transition: all 0.4s;transition: all 0.4s;}
+	#btn-box{text-align: right;margin: 5px 5px 0 0;display: none;}
+	#btn-box a{color: #fff;}
+	#btn-box a:hover{color: #333;}
+</style>
+</head>  
+<body>  
+	<!-- html -->
+	<p class="tc"><a href="javascript:;" id="add">随机生成</a></p>
+	<div id="box"></div>
+
+	<!-- js -->
+	<script>
+		window.onload = function(){
+			
+			var rotateDeg = 0, //旋转角度
+				$add = getId('add'),
+				$box = getId('box'),
+				timer = null;
+
+			//返回某ID元素
+			function getId(el) {
+				return document.getElementById(el);
+			}
+
+			//获取随机数
+			function getRandom(n1, n2) {
+				//返回5-10的随机整数，包括5，10
+				if(arguments.length===2){
+					return Math.round(n1+Math.random()*(n2-n1));
+				}
+				//返回0-10的随机整数，包括0，10
+				else if(arguments.length===1){
+					return Math.round(Math.random()*n1);
+				}
+				//返回0-255的随机整数，包括0，255
+				else{
+					return Math.round(Math.random()*255);
+				}  
+			}
+
+			//随机创建元素
+			function randomCreate() {
+				var widthArr = [350, 180, 290, 420, 150, 520], //宽 数组
+					heightArr = [90, 240, 300, 120], // 高 数组
+					colorArr = ['#337ab7', '#5cb85c', '#5bc0de']; // 颜色 数组
+				
+				//获取随机宽，高，颜色
+				var w = widthArr[getRandom(0, widthArr.length - 1)],
+					h = heightArr[getRandom(0, heightArr.length - 1)],
+					color = colorArr[getRandom(0, colorArr.length - 1)];
+
+				//创建元素
+				$box.innerHTML = '<div id="el" style="'+'width:'+w+'px;height:'+h+'px;background:'+color+'"><div id="btn-box"><a id="del-btn" href="javascript:;">删除</a> <a id="rotate-btn" href="javascript:;">旋转</a></div></div>';
+				
+				var $el = getId('el'),
+					$btnBox = getId('btn-box'),
+					$del = getId('del-btn'),
+					$rotate = getId('rotate-btn');
+
+				//鼠标悬浮和离开
+				$el.onmouseenter = function() {
+					$btnBox.style.display = 'block';
+				}
+				$el.onmouseleave = function() {
+					$btnBox.style.display = 'none';
+				}
+
+				//删除
+				$del.onclick = function() {
+					$box.removeChild($el);
+				}
+
+				//旋转
+				$rotate.onclick = function() {
+					rotateDeg += 90;
+					$el.style.transform = 'rotate('+rotateDeg+'deg)';
+				}
+			}
+
+			//随机添加元素
+			$add.onclick = function() {
+				this.innerText = !timer ? '就他了' : '随机生成';
+				rotateDeg = 0;
+
+				if(timer) {
+					clearInterval(timer);
+					timer = null;
+				} else {
+					timer = setInterval(function(){
+						randomCreate();
+					}, 100);
+				}
+			}
+		}
+	</script>
+</body>
+</html> 
