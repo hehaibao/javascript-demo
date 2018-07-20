@@ -46,3 +46,5 @@
 22. [手风琴](https://hehaibao.github.io/javascript-demo/accordion/)
 
 23. [随机生成](https://hehaibao.github.io/javascript-demo/random/)
+
+24. [打字效果](https://hehaibao.github.io/javascript-demo/typing/)
