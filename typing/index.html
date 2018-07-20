@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>打字效果 demo</title>
+  <style>
+  *{
+      margin: 0;
+      padding: 0;
+  }
+  html,body{
+      background-color: #fff;
+      width: 100%;
+      height: 100%;
+  }
+  .first-page{
+      height: 100%;
+      width: 100%;
+      background-color: #f2f2f2;
+  }
+  #first-default{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      color: #333;
+      font-size: 3em;
+  }
+  #first-words{
+      display: inline-block;
+      border-right: 0.08em solid #333;
+      position: relative;
+      top: 0;
+      left: 0;
+  }
+  </style>
+</head>
+<body>
+    <div class="first-page">
+        <span id="first-default"><p id="first-words"></p></span>
+    </div>
+
+<script>
+window.onload = function(){
+  initAutoType();
+}
+
+var initAutoType = function(){
+  var types = ["WEB前后端技术学习与分享","不忘初心","砥砺前行"]; //你要打出的字
+  var words = document.getElementById("first-words");
+
+  var stopType = false;     //用于停止自动打字的
+
+  var index = 0;
+  var tempWords = "";
+  var isNext = false;
+  var time = 240; //打字的停顿时间
+
+  var startType = setInterval(function(){
+    if(stopType){
+      //如果需要停止打字
+      clearInterval(startType);
+    }
+    if(tempWords.length === 0){
+      //如果删完了，就开始
+      if(isNext){
+        index++;
+        index = index%3;
+        isNext = false;
+      }
+      tempWords = types[index].substring(0,tempWords.length+1);
+    }else if(tempWords.length === types[index].length && isNext === false){
+      //如果已经到头了，就要删去
+     // tempWords = tempWords.substring(0,tempWords.length-1);
+      isNext = true;
+      time = 5000;
+    }else{
+      //如果既没删完也没显示完
+      if(isNext){
+        //如果是在减少
+        tempWords = tempWords.substring(0,tempWords.length-1);
+        time = 150;
+      }
+      else{
+        //如果在增多
+        time = 200;
+        tempWords = types[index].substring(0,tempWords.length+1);
+      }
+    }
+    words.innerHTML = "&nbsp;"+tempWords;
+  },time);
+};
+</script>
+</body>
+</html>
